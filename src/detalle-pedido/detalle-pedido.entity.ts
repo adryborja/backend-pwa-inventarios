@@ -18,5 +18,5 @@ export class DetallePedido {
     cantidad: number;
 
     @Column({ type: "decimal", precision: 10, scale: 2 })
-    precioUnitario: number;
+    precio_unitario: number;
 }

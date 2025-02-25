@@ -1,6 +1,11 @@
 import { Empresa } from "src/empresa/empresa.entity";
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
+export enum EstadoPedido {
+    PENDIENTE = "Pendiente",
+    ENTREGADO = "Entregado",
+    CANCELADO = "Cancelado"
+} 
 @Entity({ name: 'pedido' })
 export class Pedido {
 
@@ -11,11 +16,15 @@ export class Pedido {
     empresa: Empresa;
 
     @CreateDateColumn({ name: 'fecha_solicitud' })
-    fechaSolicitud: Date;
+    fecha_solicitud: Date;
 
     @Column({ type: 'date', nullable: true })
-    fechaEntrega: Date;
+    fecha_entrega: Date;
 
-    @Column({ length: 20, default: "Pendiente" })
-    estado: string;
+    @Column({
+        type: "enum", 
+        enum: EstadoPedido, 
+        default: EstadoPedido.PENDIENTE 
+    })
+    estado: EstadoPedido;
 }

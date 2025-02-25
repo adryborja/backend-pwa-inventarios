@@ -1,6 +1,10 @@
 import { Usuario } from "src/usuario/usuario.entity";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
+export enum EstadoEmpresa {
+    ACTIVO = "Activo",
+    INACTIVO = "Inactivo"
+}
 @Entity({ name: 'empresa'})
 export class Empresa {
 
@@ -20,7 +24,7 @@ export class Empresa {
     telefono: string;
 
     @Column({ unique: true })
-    emailContacto: string;
+    email_contacto: string;
 
     @Column({ length: 50 })
     sector: string;
@@ -28,8 +32,12 @@ export class Empresa {
     @CreateDateColumn({ name: 'fecha_creacion' })
     fechaCreacion: Date;
 
-    @Column({ length: 10, default: "Activo" })
-    estado: string;
+    @Column({
+        type: "enum",
+        enum: EstadoEmpresa,  
+        default: EstadoEmpresa.ACTIVO
+    })
+    estado: EstadoEmpresa;
 
     @OneToMany(() => Usuario, (usuario) => usuario.empresa)
     usuarios:Usuario[];

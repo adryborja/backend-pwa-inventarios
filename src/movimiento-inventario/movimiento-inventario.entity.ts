@@ -12,13 +12,13 @@ export class MovimientoInventario {
     producto: Producto;
 
     @Column({ length: 20 })
-    tipoMovimiento: string; // Entrada, Salida, Ajuste
+    tipo_movimiento: string; // Entrada, Salida, Ajuste
 
     @Column({ type: "int" })
     cantidad: number;
 
     @CreateDateColumn({ name: 'fecha_movimiento' })
-    fechaMovimiento: Date;
+    fecha_movimiento: Date;
 
     @Column({ length: 255 })
     motivo: string;
@@ -27,7 +27,7 @@ export class MovimientoInventario {
     usuario: Usuario;
 
     @Column({ type: "decimal", precision: 10, scale: 2 })
-    costoUnitario: number;
+    costo_unitario: number;
 
     @Column({ length: 100, nullable: true })
     ubicacion: string;

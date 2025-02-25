@@ -10,7 +10,7 @@ export class Producto {
     id: number;
 
     @Column({ unique: true, length: 50 })
-    codigoBarras: string;
+    codigo_barras: string;
 
     @Column({ length: 100 })
     nombre: string;
@@ -22,16 +22,16 @@ export class Producto {
     categoria: Categoria;
 
     @Column({ type: "decimal", precision: 10, scale: 2 })
-    precioCompra: number;
+    precio_compra: number;
 
     @Column({ type: "decimal", precision: 10, scale: 2 })
-    precioVenta: number;
+    precio_venta: number;
 
     @Column({ type: "int" })
-    stockMinimo: number;
+    stock_minimo: number;
 
     @Column({ type: "int" })
-    stockMaximo: number;
+    stock_maximo: number;
 
     @ManyToOne(() => Empresa, { nullable: false, onDelete: "CASCADE" })
     empresa: Empresa;

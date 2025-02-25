@@ -33,4 +33,12 @@ export class UsuarioController {
     async eliminarUsuario(@Param('id', ParseIntPipe) id: number): Promise<void> {
         return await this.service.eliminarUsuario(id);
     }
+
+    @Post(':idUsuario/roles/:idRol')
+    async asignarRol(
+        @Param('idUsuario', ParseIntPipe) idUsuario: number,
+        @Param('idRol', ParseIntPipe) idRol: number
+    ): Promise<Usuario> {
+        return await this.service.asignarRol(idUsuario, idRol);
+    }
 }

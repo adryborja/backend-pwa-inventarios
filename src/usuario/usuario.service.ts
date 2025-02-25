@@ -44,4 +44,31 @@ export class UsuarioService {
         const usuario = await this.obtenerUsuario(id);
         await this.repositorioUsuario.remove(usuario);
     }
+
+    async asignarRol(idUsuario: number, idRol: number): Promise<Usuario> {
+        const usuario = await this.repositorioUsuario.findOne({
+            where: { id: idUsuario },
+            relations: ['roles']
+        });
+
+        if (!usuario) {
+            throw new NotFoundException(`Usuario con ID ${idUsuario} no encontrado`);
+        }
+
+        const rol = await this.repositorioRol.findOne({
+            where: { id: idRol }
+        });
+
+        if (!rol) {
+            throw new NotFoundException(`Rol con ID ${idRol} no encontrado`);
+        }
+
+        // Verifica si el usuario ya tiene el rol asignado
+        if (usuario.roles.some(r => r.id === idRol)) {
+            throw new NotFoundException(`El usuario ya tiene asignado el rol con ID ${idRol}`);
+        }
+
+        usuario.roles.push(rol);
+        return await this.repositorioUsuario.save(usuario);
+    }
 }

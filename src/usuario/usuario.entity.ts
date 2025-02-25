@@ -2,6 +2,10 @@ import { Rol } from "src/rol/rol.entity";
 import { Empresa } from "src/empresa/empresa.entity";
 import { Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn, JoinTable } from "typeorm";
 
+export enum EstadoUsuario {
+    ACTIVO = "Activo",
+    INACTIVO = "Inactivo"
+}
 @Entity({ name: 'usuario' })
 export class Usuario {
 
@@ -9,7 +13,7 @@ export class Usuario {
     id: number;
 
     @Column({ name: 'nombre_completo', length: 100 })
-    nombreCompleto: string;
+    nombre_completo: string;
 
     @Column({ unique: true })
     email: string;
@@ -17,8 +21,12 @@ export class Usuario {
     @Column({ length: 20, nullable: true })
     telefono: string;
 
-    @Column({ length: 10, default: 'Activo' })
-    estado: string;
+    @Column({
+        type: "enum",
+        enum: EstadoUsuario,  
+        default: EstadoUsuario.ACTIVO
+    })
+    estado: EstadoUsuario;
 
     @CreateDateColumn({ name: 'fecha_creacion' })
     fechaCreacion: Date;

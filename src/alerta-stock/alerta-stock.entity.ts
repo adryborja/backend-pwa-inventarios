@@ -1,6 +1,10 @@
 import { Producto } from "src/producto/producto.entity";
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
+export enum EstadoAlerta {
+    ACTIVO = "Activo",
+    INACTIVO = "Inactivo"
+}
 @Entity({ name: 'alerta_stock' })
 export class AlertaStock {
 
@@ -11,10 +15,14 @@ export class AlertaStock {
     producto: Producto;
 
     @Column({ type: "int" })
-    nivelMinimo: number;
+    nivel_minimo: number;
 
-    @Column({ length: 10, default: "Activo" })
-    estado: string;
+    @Column({
+        type: "enum",
+        enum: EstadoAlerta,  // ✅ Solo permite "Activo" o "Inactivo"
+        default: EstadoAlerta.ACTIVO
+    })
+    estado: EstadoAlerta;
 
     @CreateDateColumn({ name: 'fecha_creacion' })
     fechaCreacion: Date;
