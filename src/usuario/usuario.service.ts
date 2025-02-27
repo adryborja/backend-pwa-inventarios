@@ -36,8 +36,26 @@ export class UsuarioService {
     }
 
     async actualizarUsuario(id: number, usuarioData: Partial<Usuario>): Promise<Usuario> {
-        await this.repositorioUsuario.update(id, usuarioData);
-        return this.obtenerUsuario(id);
+        const usuario = await this.repositorioUsuario.findOne({
+            where: { id },
+            relations: ['roles'], 
+        });
+    
+        if (!usuario) {
+            throw new NotFoundException(`Usuario con ID ${id} no encontrado`);
+        }
+    
+        if (usuarioData.roles) {
+            const rolesIds = usuarioData.roles.map((rol) => rol.id); 
+            const roles = await this.repositorioRol.findByIds(rolesIds);
+            usuario.roles = roles; 
+        }
+    
+        
+        delete usuarioData.roles;
+        Object.assign(usuario, usuarioData);
+    
+        return this.repositorioUsuario.save(usuario);
     }
 
     async eliminarUsuario(id: number): Promise<void> {
