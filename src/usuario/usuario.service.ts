@@ -23,7 +23,7 @@ export class UsuarioService {
     async obtenerUsuario(id: number): Promise<Usuario> {
         const usuario = await this.repositorioUsuario.findOne({
             where: { id },
-            relations: ['roles']
+            relations: ['roles','empresa']
         });
         if (!usuario) {
             throw new NotFoundException(`No existe el usuario con id: ${id}`);
@@ -32,7 +32,7 @@ export class UsuarioService {
     }
 
     async obtenerTodosUsuarios(): Promise<Usuario[]> {
-        return await this.repositorioUsuario.find({ relations: ['roles'] });
+        return await this.repositorioUsuario.find({ relations: ['roles', 'empresa'] });
     }
 
     async actualizarUsuario(id: number, usuarioData: Partial<Usuario>): Promise<Usuario> {
@@ -63,7 +63,7 @@ export class UsuarioService {
             throw new NotFoundException(`Rol con ID ${idRol} no encontrado`);
         }
 
-        // Verifica si el usuario ya tiene el rol asignado
+        
         if (usuario.roles.some(r => r.id === idRol)) {
             throw new NotFoundException(`El usuario ya tiene asignado el rol con ID ${idRol}`);
         }

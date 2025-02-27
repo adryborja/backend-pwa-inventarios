@@ -37,8 +37,9 @@ export class Usuario {
     @Column({ name: 'password_hash' })
     passwordHash: string;
 
-    @ManyToOne(() => Empresa, (empresa) => empresa.usuarios, { nullable: false, onDelete: "CASCADE" })
+    @ManyToOne(() => Empresa, (empresa) => empresa.usuarios, {eager: true, nullable: false, onDelete: "CASCADE" })
     empresa: Empresa;
+
 
     @ManyToMany(() => Rol, (rol) => rol.usuarios)
     @JoinTable({
