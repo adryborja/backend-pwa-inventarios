@@ -54,7 +54,7 @@ El frontend está estructurado en **componentes reutilizables**, incluyendo:
 ### **Configurar Base de Datos**
 1. Crear una base de datos en PostgreSQL llamada `control-inventario`
 2. Configurar la conexión a la base de datos en DBeaver o su gestor de preferencia
-3. Verificar que los parámetros de conexión en el archivo de configuración del backend coincidan con su configuración local
+3. Verificar que los parámetros de conexión en el archivo de configuración del backend coincidan con su configuración local.
 
 ### **Configurar backend**
 
