@@ -23,7 +23,7 @@ import { ReporteModule } from './reporte/reporte.module';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'root',
+      password: 'admin',
       database: 'control-inventario',
       //entities: [Rol],
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
