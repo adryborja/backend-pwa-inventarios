@@ -16,15 +16,22 @@ export class ProductoService {
     }
 
     async obtenerProducto(id: number): Promise<Producto> {
-        const producto = await this.productoRepository.findOne({ where: { id } });
+        const producto = await this.productoRepository.findOne({
+            where: { id },
+            relations: ["categoria", "empresa", "proveedor"], // ✅ Incluir relaciones
+        });
+    
         if (!producto) {
             throw new NotFoundException(`Producto con ID ${id} no encontrado`);
         }
+    
         return producto;
     }
-
+    
     async obtenerTodosProductos(): Promise<Producto[]> {
-        return await this.productoRepository.find();
+        return await this.productoRepository.find({
+            relations: ["categoria", "empresa", "proveedor"], // ✅ Incluir relaciones
+        });
     }
 
     async actualizarProducto(id: number, productoData: Partial<Producto>): Promise<Producto> {

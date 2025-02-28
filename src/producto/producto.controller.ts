@@ -15,7 +15,7 @@ export class ProductoController {
     async obtenerProducto(@Param('id', ParseIntPipe) id: number): Promise<Producto> {
         return await this.productoService.obtenerProducto(id);
     }
-
+    
     @Get()
     async obtenerTodosProductos(): Promise<Producto[]> {
         return await this.productoService.obtenerTodosProductos();
