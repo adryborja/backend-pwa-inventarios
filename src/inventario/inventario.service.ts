@@ -16,15 +16,23 @@ export class InventarioService {
     }
 
     async obtenerInventario(id: number): Promise<Inventario> {
-        const inventario = await this.inventarioRepository.findOne({ where: { id } });
+        const inventario = await this.inventarioRepository.findOne({ 
+            where: { id },
+            relations: ["empresa"],
+        });
+        
         if (!inventario) {
             throw new NotFoundException(`Inventario con ID ${id} no encontrado`);
+            
         }
         return inventario;
     }
 
     async obtenerTodosInventarios(): Promise<Inventario[]> {
-        return await this.inventarioRepository.find();
+        return await this.inventarioRepository.find({
+            relations: ["empresa"],
+        });
+        
     }
 
     async actualizarInventario(id: number, inventarioData: Partial<Inventario>): Promise<Inventario> {
